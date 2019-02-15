@@ -1,0 +1,82 @@
+<template>
+  <nav>
+    <v-snackbar v-model="snackbar" :timeout="4000" top color="success">
+      <span>Awesome! You added a new project.</span>
+      <v-btn color="white" flat @click="snackbar = false">Close</v-btn>
+    </v-snackbar>
+
+    <v-toolbar dark flat app>
+      <v-toolbar-title class="text grey--text">
+        <router-link to="/" class="text grey--text">
+          <img class="roundrect mr-4" src="../assets/wallapop.jpg">
+          <span class="font-weight-light"></span>
+        </router-link>
+      </v-toolbar-title>
+
+      <Searchbar/>
+
+      <v-menu offset-y>
+        <v-btn router to="/mensajes" color="white" flat slot="activator">
+          <v-icon left>message</v-icon>
+          <span>Mensajes</span>
+        </v-btn>
+      </v-menu>
+
+      <v-btn flat color="white">
+        <span v-if="isLoggedIn" @click="onClick()">Logout</span>
+        <span v-if="!isLoggedIn" @click="method()">Login</span>
+
+        <v-icon right>exit_to_app</v-icon>
+      </v-btn>
+    </v-toolbar>
+  </nav>
+</template>
+
+<script>
+import Searchbar from "./Searchbar";
+export default {
+  props: {
+    onClick: Function,
+    method: Function
+  },
+  components: { Searchbar },
+  data() {
+    return {
+      drawer: false,
+      user: localStorage.user,
+      links: [
+        { icon: "dashboard", text: "Dashboard", route: "/" },
+        { icon: "work_outline", text: "Empleos", route: "/empleos" },
+        { icon: "list_alt", text: "Empresas", route: "/empresas" },
+
+        { icon: "person", text: "Profile", route: "/profile" },
+        { icon: "verified_user", text: "Admin", route: "/admin" }
+      ],
+      snackbar: false
+    };
+  },
+  computed: {
+    isLoggedIn: function() {
+      return this.$store.getters.isLoggedIn;
+    }
+  }
+};
+</script>
+
+<style>
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.roundrect {
+  width: 50px;
+  border-radius: 10px;
+}
+
+#settings {
+  position: absolute;
+  bottom: 20px;
+  left: 70%;
+}
+</style>
