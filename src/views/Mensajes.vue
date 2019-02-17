@@ -1,25 +1,33 @@
 <template>
-  <div class="mensajes">
-    <v-container>
-      <h1 class="heading grey--text ml-4">Chats</h1>
-    </v-container>
-    <v-container>
-      <v-layout row justify-start mb-2></v-layout>
-      <v-container fluid grid-list-md>
-        <v-layout row wrap>
-          <v-flex d-flex xs12 sm12 md12 flat v-for="chat in conversaciones" :key="chat.key">
-            <v-card router :to="`/mensajes/${chat.id}`" class="ma-1">
-              <v-layout row wrap>
-                <v-flex class="ma-3" xs6 sm6 md6>
-                  <h3 v-if="chat.seller_email != user">{{ chat.seller_email }}</h3>
-                  <h3 v-if="chat.buyer_email != user">{{ chat.buyer_email }}</h3>
-                </v-flex>
-                <v-divider></v-divider>
-              </v-layout>
-            </v-card>
-          </v-flex>
-        </v-layout>
-      </v-container>
+  <div class="mb-4">
+    <v-container style="margin-top: -1.4%;margin-left:15%;">
+      <v-layout row>
+        <v-flex d-flex xs4 sm4 md4 class="white" style="min-height: 100vh;">
+          <v-layout column>
+            <div v-for="(chat, index) in conversaciones" :key="index">
+              <v-flex d-flex xs12 sm12 md12 flat>
+                <v-card flat router :to="`/dashboard/mensajes/${chat.id}`" class="ma-1">
+                  <div class="ma-3">
+                    <h3 v-if="chat.seller_email != user">{{ chat.seller_email }}</h3>
+                    <h3 v-if="chat.buyer_email != user">{{ chat.buyer_email }}</h3>
+                  </div>
+                </v-card>
+              </v-flex>
+              <v-divider dark="true"></v-divider>
+            </div>
+          </v-layout>
+          <v-divider vertical="true" dark="true"></v-divider>
+        </v-flex>
+
+        <v-flex xs6 sm6 md6 class="white" style="min-height: 100vh;">
+          <v-layout wrap>
+            <v-flex d-flex xs12 style="margin-top:-16%;">
+              <v-divider vertical="true" dark="true"></v-divider>
+              <router-view :key="$route.fullPath"></router-view>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+      </v-layout>
     </v-container>
   </div>
 </template>
@@ -39,7 +47,8 @@ export default {
       buyer: "",
       token: store.getters.token,
       conversaciones: null,
-      user: localStorage.user
+      user: localStorage.user,
+      counter: 0
     };
   },
   mounted() {

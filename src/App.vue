@@ -3,9 +3,9 @@
     <Navbar v-bind:onClick="logout" v-bind:method="login"/>
 
     <v-content class="mx-4 mb-4">
-      <router-view></router-view>
+      <router-view v-model="footer"></router-view>
     </v-content>
-    <Footer/>
+    <Footer v-if="footer"/>
   </v-app>
 </template>
 
@@ -13,8 +13,11 @@
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
+//App.vue
+import { SidebarMenu } from "vue-sidebar-menu";
+
 export default {
-  components: { Navbar, Footer },
+  components: { Navbar, Footer, SidebarMenu },
   name: "App",
   computed: {
     isLoggedIn: function() {
@@ -46,7 +49,9 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      footer: true
+    };
   }
 };
 </script>

@@ -5,6 +5,8 @@ import store from "./store.js";
 import Confirmar from "./views/Confirmar.vue";
 import Login from "./views/Login.vue";
 import Dashboard from "./views/Dashboard.vue";
+import Home from "./views/Home.vue";
+
 import Mensajes from "./views/Mensajes.vue";
 import Chat from "./views/Chat.vue";
 
@@ -18,29 +20,58 @@ let router = new Router({
 
   routes: [
     {
-      path: "/",
+      path: "/dashboard",
       name: "Dashboard",
       component: Dashboard,
+      meta: {
+        requiresAuth: true
+      },
+      children: [
+        {
+          path: "mensajes",
+          component: Mensajes,
+          children: [
+            {
+              path: ":id",
+              component: Chat
+            }
+          ]
+        },
+        {
+          path: "perfil",
+          component: Home
+        },
+        {
+          path: "favoritos",
+          component: Home
+        },
+        {
+          path: "opiniones",
+          component: Home
+        },
+        {
+          path: "estadisticas",
+          component: Home
+        },
+        {
+          path: "productos",
+          component: Home
+        },
+        {
+          path: "productos/vendidos",
+          component: Home
+        }
+      ]
+    },
+    {
+      path: "/",
+      name: "Home",
+      component: Home,
       meta: {
         requiresAuth: false
       }
     },
-    {
-      path: "/mensajes/",
-      name: "Mensajes",
-      component: Mensajes,
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: "/mensajes/:id",
-      name: "Mensajes",
-      component: Chat,
-      meta: {
-        requiresAuth: true
-      }
-    },
+
     {
       path: "/login",
       name: "login",

@@ -10,6 +10,10 @@ Vue.prototype.$http = Axios;
 import VueSingleSelect from "vue-single-select";
 import InputTag from "vue-input-tag";
 import VueNumberInput from "@chenfengyuan/vue-number-input";
+import VueSidebarMenu from "vue-sidebar-menu";
+import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
+
+Vue.use(VueSidebarMenu);
 
 Vue.component("vue-single-select", VueSingleSelect);
 Vue.component("input-tag", InputTag);

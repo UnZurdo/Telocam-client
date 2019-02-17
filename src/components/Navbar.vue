@@ -16,9 +16,16 @@
       <Searchbar/>
 
       <v-menu offset-y>
-        <v-btn router to="/mensajes" color="white" flat slot="activator">
+        <v-btn router to="/dashboard/mensajes" color="white" flat slot="activator">
           <v-icon left>message</v-icon>
           <span>Mensajes</span>
+        </v-btn>
+      </v-menu>
+
+      <v-menu v-if="isLoggedIn" offset-y>
+        <v-btn router to="/dashboard/productos" color="white" flat slot="activator">
+          <v-icon left>person</v-icon>
+          <span>Mi zona</span>
         </v-btn>
       </v-menu>
 

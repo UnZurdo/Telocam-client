@@ -1,7 +1,7 @@
 <template>
   <div class="mensajes">
     <v-container>
-      <h1 class="heading grey--text ml-4">Chats</h1>
+      <h1 class="heading grey--text"></h1>
     </v-container>
     <v-container>
       <v-layout row justify-start mb-2></v-layout>
