@@ -51,14 +51,7 @@ export default {
     return {
       drawer: false,
       user: localStorage.user,
-      links: [
-        { icon: "dashboard", text: "Dashboard", route: "/" },
-        { icon: "work_outline", text: "Empleos", route: "/empleos" },
-        { icon: "list_alt", text: "Empresas", route: "/empresas" },
 
-        { icon: "person", text: "Profile", route: "/profile" },
-        { icon: "verified_user", text: "Admin", route: "/admin" }
-      ],
       snackbar: false
     };
   },

@@ -1,5 +1,23 @@
 <template>
-  <div class="dashboard"></div>
+  <div class="dashboard">
+    <v-layout justify-center class="mb-3">
+      <v-container class="ma-3 white">
+        <v-layout row class="mb-3">
+          <v-flex class="ma-2 grey" xs5 sm4 md3>
+            <v-card class="ma-2">
+              <v-layout class="ma-2 ml-4" row wrap></v-layout>
+            </v-card>
+          </v-flex>
+
+          <v-flex class="ma-2 blue" xs7 sm8 md9>
+            <v-card class="ma-2">
+              <v-layout class="ma-2 ml-4" row wrap></v-layout>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-layout>
+  </div>
 </template>
 
 <script>

@@ -4,35 +4,12 @@
       <h1 class="heading grey--text"></h1>
     </v-container>
     <v-container>
-      <v-layout row justify-start mb-2></v-layout>
-      <v-container fluid grid-list-md>
-        <v-layout row wrap>
-          <v-flex flat>
-            <v-card v-for="chat in conversaciones" :key="chat.key" class="ma-1">
-              <v-layout row wrap>
-                <v-flex xs6 sm6 md6>
-                  <h3 class="ma-4" v-if="user != chat.user">L: {{ chat.text }}</h3>
-                </v-flex>
-
-                <v-flex xs6 sm6 md6 class="text-xs-right">
-                  <h3 class="ma-4" v-if="user == chat.user">R: {{ chat.text }}</h3>
-                </v-flex>
-              </v-layout>
-            </v-card>
-            <form v-on:submit.prevent="sendMessage">
-              <v-text-field
-                class="mx-1 mt-2"
-                solo
-                placeholder="Escribir mensaje ..."
-                append-icon="send"
-                v-model="msg"
-                @click:append="sendMessage"
-                clearable
-              ></v-text-field>
-            </form>
-          </v-flex>
-        </v-layout>
-      </v-container>
+      <basic-vue-chat
+        :initial-feed="feed"
+        :initialAuthorId="0"
+        @newOwnMessage="sendMessage"
+        :title="''"
+      />
     </v-container>
   </div>
 </template>
@@ -42,11 +19,13 @@
 import axios from "axios";
 import store from "../store.js";
 import { API_BASE } from "../config";
+import BasicVueChat from "basic-vue-chat";
+import moment from "moment";
 
 import io from "socket.io-client";
 
 export default {
-  components: {},
+  components: { BasicVueChat },
   name: "Chat",
   data() {
     return {
@@ -55,9 +34,18 @@ export default {
       msg: "",
       buyer: "",
       token: store.getters.token,
-      conversaciones: [],
       user: localStorage.user,
-      socket: io(`${API_BASE}/mychat`)
+      socket: io(`${API_BASE}/mychat`),
+      conversaciones: [],
+      rendered: false,
+      feed: [
+        {
+          id: 0,
+          author: "Person",
+          contents: "¿Tienes alguna pregunta?",
+          date: "16:30"
+        }
+      ]
     };
   },
   mounted() {
@@ -71,8 +59,10 @@ export default {
         }
       })
       .then(response => {
-        this.conversaciones = response.data.data;
-        console.log(this.conversaciones);
+        const msg = response.data.data;
+        const messages = msg.map(m => this.parseMsg(m));
+        this.conversaciones = messages;
+        console.log("Mounted", this.conversaciones, this.feed);
       });
 
     this.socket.emit("JOINED", {
@@ -80,25 +70,43 @@ export default {
     });
 
     this.socket.on("MESSAGE", data => {
-      console.log(data);
-      this.conversaciones.push(data);
+      console.log("MESSAGE", data);
+      var msg = this.parseMsg(data);
+      this.conversaciones.push(msg);
+      this.msg = msg.contents;
     });
   },
   methods: {
-    sendMessage(e) {
-      e.preventDefault();
-      console.log(this.socket);
-
-      //this.conversaciones.push(new_msg);
+    parseMsg(data) {
+      var dateParsed = data.created_date.split("T");
+      var hourParsed = dateParsed[1].split(":");
+      var hour = hourParsed[0] + ":" + hourParsed[1];
+      var res = {
+        id: data.user === this.user ? 1 : 0,
+        author: data.user === this.user ? "Me" : "Person",
+        contents: data.text,
+        date: hour
+      };
+      this.feed.push(res);
+      return res;
+    },
+    sendMessage(msg) {
+      console.log("SEND_MESSAGE", msg);
       this.socket.emit("SEND_MESSAGE", {
         user: this.user,
-        text: this.msg,
+        text: msg,
         conversacion: this.$route.params.id,
-        room: this.$route.params.id
+        room: this.$route.params.id,
+        created_date: moment().format()
       });
-      this.msg = "";
     }
   },
   computed: {}
 };
 </script>
+
+<style  scoped>
+.window__header__container {
+  background: linear-gradient(90deg, #888888, #909090) !important;
+}
+</style>
