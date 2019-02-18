@@ -25,27 +25,39 @@
         </v-layout>
       </v-list>
     </v-menu>
-    <v-toolbar-items offset-y class="hidden-sm-and-down">
-      <v-text-field
-        solo
-        class="styled-input mt-2"
-        height="1"
-        placeholder="Buscar"
-        color="white"
-        append-icon="search"
-        v-model="search"
-      ></v-text-field>
+    <v-toolbar-items class="hidden-sm-and-down">
+      <suggestions
+        v-model="searchQuery"
+        :onItemSelected="onSearchItemSelected"
+        :onInputChange="onInputChange"
+        options.placeholder="Buscar ..."
+      >
+        <div slot="item" slot-scope="props" class="single-item">
+          <template v-if="props.item.Icon && props.item.Icon.URL">
+            <div
+              class="image-wrap"
+              :style="{'backgroundImage': 'url('+ props.item.Icon.URL + ')' }"
+            ></div>
+          </template>
+          <span class="name">{{props.item.Text}}</span>
+        </div>
+      </suggestions>
     </v-toolbar-items>
   </v-toolbar>
 </template>
 
 
 <script>
+import Suggestions from "v-suggestions";
+import axios from "axios";
 export default {
+  components: { Suggestions },
   data() {
     return {
       search: "",
+      searchQuery: "",
 
+      selectedSearchItem: null,
       user: localStorage.user,
       links: [
         { icon: "dashboard", text: "Todas", route: "/" },
@@ -79,6 +91,32 @@ export default {
         { icon: "person", text: "Otros", route: "/profile" }
       ]
     };
+  },
+  methods: {
+    onInputChange(query) {
+      if (query.trim().length === 0) {
+        return null;
+      }
+      const url = `http://api.duckduckgo.com/?q=${query}&format=json&pretty=1`;
+      return new Promise(resolve => {
+        axios.get(url).then(response => {
+          const items = [];
+          response.data.RelatedTopics.forEach(item => {
+            if (item.Text) {
+              items.push(item);
+            } else if (item.Topics && item.Topics.length > 0) {
+              item.Topics.forEach(topic => {
+                items.push(topic);
+              });
+            }
+          });
+          resolve(items);
+        });
+      });
+    },
+    onSearchItemSelected(item) {
+      this.selectedSearchItem = item;
+    }
   }
 };
 </script>
@@ -95,8 +133,24 @@ export default {
   text-align: center;
 }
 
-.item {
+.items {
+  width: 200px;
 }
 .tile {
+}
+
+.name {
+  font-size: 10pt;
+  color: black;
+}
+
+.v-suggestions {
+  width: 200px;
+}
+input {
+  margin-top: 10%;
+  background-color: rgb(102, 102, 102);
+  border-style: solid;
+  color: inherit;
 }
 </style>

@@ -8,7 +8,7 @@
     <v-toolbar dark flat app>
       <v-toolbar-title class="text grey--text">
         <router-link to="/" class="text grey--text">
-          <img class="roundrect mr-4" src="../assets/wallapop.jpg">
+          <img class="roundrect mr-4 mt-1" src="../assets/wallapop.jpg">
           <span class="font-weight-light"></span>
         </router-link>
       </v-toolbar-title>
@@ -70,8 +70,8 @@ a {
 }
 
 .roundrect {
-  width: 50px;
-  border-radius: 10px;
+  width: 45px;
+  border-radius: 12px;
 }
 
 #settings {

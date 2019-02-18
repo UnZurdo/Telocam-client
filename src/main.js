@@ -12,7 +12,10 @@ import InputTag from "vue-input-tag";
 import VueNumberInput from "@chenfengyuan/vue-number-input";
 import VueSidebarMenu from "vue-sidebar-menu";
 import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
+import Suggestions from "v-suggestions";
+import "v-suggestions/dist/v-suggestions.css"; // you can import the stylesheets also (optional)
 
+Vue.use(Suggestions);
 Vue.use(VueSidebarMenu);
 
 Vue.component("vue-single-select", VueSingleSelect);
