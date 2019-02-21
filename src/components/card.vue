@@ -17,8 +17,8 @@
               </p>
             </div>
 
-            <v-layout row style="margin-top: -8%;">
-              <v-flex xs10 sm10 md10>
+            <v-layout row style="margin-top: -6%;">
+              <v-flex d-flex xs12 sm6 md8>
                 <v-layout column>
                   <v-flex>
                     <div v-if="product.rating == 1">
@@ -47,7 +47,7 @@
                       <i class="fa fa-star"></i>
                     </div>
                   </v-flex>
-                  <v-flex>
+                  <v-flex style="margin-top:-5%;">
                     <div class="card-content__reviews">
                       <div class="is-pulled-left">
                         <p>
@@ -59,7 +59,7 @@
                 </v-layout>
               </v-flex>
 
-              <v-flex>
+              <v-flex d-flex xs12 sm6 md10>
                 <div class="card-content__price is-pulled-left">
                   <span class="title is-3">
                     <strong>{{ product.price }}&euro;</strong>

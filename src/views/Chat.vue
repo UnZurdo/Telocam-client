@@ -1,9 +1,6 @@
 <template>
   <div class="mensajes">
     <v-container>
-      <h1 class="heading grey--text"></h1>
-    </v-container>
-    <v-container>
       <basic-vue-chat
         :initial-feed="feed"
         :initialAuthorId="0"

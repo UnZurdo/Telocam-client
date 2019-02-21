@@ -6,12 +6,10 @@
     </v-snackbar>
 
     <v-toolbar dark flat app>
-      <v-toolbar-title class="text grey--text">
-        <router-link to="/" class="text grey--text">
-          <img class="roundrect mr-4 mt-1" src="../assets/wallapop.jpg">
-          <span class="font-weight-light"></span>
-        </router-link>
-      </v-toolbar-title>
+      <router-link to="/" class="text grey--text">
+        <img class="roundrect mr-4 mt-1" src="../assets/wallapop.jpg">
+        <span class="font-weight-light"></span>
+      </router-link>
 
       <Searchbar/>
 
@@ -72,11 +70,5 @@ a {
 .roundrect {
   width: 45px;
   border-radius: 12px;
-}
-
-#settings {
-  position: absolute;
-  bottom: 20px;
-  left: 70%;
 }
 </style>

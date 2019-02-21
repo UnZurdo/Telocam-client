@@ -4,10 +4,10 @@
     <v-menu offset-y>
       <v-toolbar-side-icon slot="activator"></v-toolbar-side-icon>
 
-      <v-list class="mt-3" style="width: 500px;" justify-center>
+      <v-list class="mt-3" style="width: 800px;" justify-center>
         <v-layout row wrap>
-          <v-flex xs4 sm4 md4 v-for="link in links" :key="link.text">
-            <v-list-tile router :to="link.route">
+          <v-flex xs3 sm3 md3 v-for="link in links" :key="link.text">
+            <v-list-tile router :to="link.route" style="height:60px;">
               <v-layout column wrap class="item my-5">
                 <v-flex>
                   <v-list-tile-action class="justify-center">
@@ -33,12 +33,7 @@
         options.placeholder="Buscar ..."
       >
         <div slot="item" slot-scope="props" class="single-item">
-          <template v-if="props.item.Icon && props.item.Icon.URL">
-            <div
-              class="image-wrap"
-              :style="{'backgroundImage': 'url('+ props.item.Icon.URL + ')' }"
-            ></div>
-          </template>
+          <template v-if="props.item.Icon && props.item.Icon.URL"></template>
           <span class="name">{{props.item.Text}}</span>
         </div>
       </suggestions>
@@ -121,7 +116,7 @@ export default {
 };
 </script>
 
-<style scope>
+<style >
 .v-text-field--box .v-input__slot,
 .v-text-field--outline .v-input__slot {
   max-height: 10px !important;
@@ -129,12 +124,18 @@ export default {
 
 .textbox {
   font-size: 10pt;
-
   text-align: center;
 }
 
 .items {
-  width: 200px;
+  border-radius: 10px;
+  width: 400px;
+  background-color: rgb(250, 250, 250);
+}
+
+.item {
+  border-radius: 10px;
+  width: 400px;
 }
 .tile {
 }
@@ -145,12 +146,20 @@ export default {
 }
 
 .v-suggestions {
-  width: 200px;
+  border-radius: 10px;
+  position: absolute;
 }
-input {
-  margin-top: 10%;
-  background-color: rgb(102, 102, 102);
+
+.suggestions {
+  border-radius: 20px;
+  margin-top: 7%;
+}
+.v-suggestions input {
+  margin-top: 8%;
   border-style: solid;
   color: inherit;
+  border-radius: 6px;
+  height: 50%;
+  font-size: 13pt;
 }
 </style>
